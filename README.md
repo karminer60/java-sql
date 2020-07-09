@@ -77,7 +77,9 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
-
+SELECT	*
+FROM	orders
+ORDER BY order_date DESC
 ```
 
 * [ ] ***find all suppliers who have names longer than 20 characters. Returns 11 records***
@@ -89,7 +91,9 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
-
+SELECT	*
+FROM	suppliers
+WHERE	length(company_name) > 20
 ```
 
 * [ ] ***find all customers that include the word 'MARKET' in the contact title. Should return 19 records***
@@ -102,7 +106,9 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
-
+SELECT	*
+FROM	customers
+WHERE	upper(contact_title) LIKE '%MARKET%'
 ```
 
 * [ ] ***add a customer record for***
@@ -119,7 +125,10 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
-
+INSERT INTO customers(customer_id, company_name, contact_name,
+					 address, city, postal_code, country)
+VALUES('SHIRE', 'The Shire', 'Bilbo Baggins', '1 Hobbit-Hole',
+	  'Bag End', '111', 'Middle Earth')
 ```
 
 * [ ] ***update _Bilbo Baggins_ record so that the postal code changes to _"11122"_***
@@ -130,6 +139,8 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
+UPDATE	customers SET postal_code = '11122'
+WHERE	contact_name = 'Bilbo Baggins'
 
 ```
 
@@ -142,6 +153,12 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
+SELECT	customers.company_name, count(orders.order_id) as Orders
+FROM	orders 
+JOIN	customers
+ON		orders.customer_id = customers.customer_id
+GROUP BY customers.company_name, customers.customer_id
+Order BY count(orders.order_id) DESC
 
 ```
 
@@ -153,7 +170,12 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
-
+SELECT	customers.contact_name, count(orders.order_id) as Orders
+FROM	orders 
+JOIN	customers
+ON		orders.customer_id = customers.customer_id
+GROUP BY customers.contact_name, customers.customer_id
+Order BY count(orders.order_id) DESC
 ```
 
 * [ ] ***list orders grouped by customer's city showing the number of orders per city. Returns 69 Records with _Aachen_ showing 6 orders and _Albuquerque_ showing 18 orders***
@@ -164,6 +186,12 @@ WHERE	supplier_id = '11'
   </details>
 
 ```SQL
+SELECT	customers.city, count(orders.order_id) as Orders
+FROM	orders 
+JOIN	customers
+ON		orders.customer_id = customers.customer_id
+GROUP BY customers.city
+ORDER BY customers.city ASC
 
 ```
 
