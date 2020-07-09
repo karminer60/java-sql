@@ -185,37 +185,37 @@ Below are some empty tables to be used to normalize the database
 * Not all of the cells will contain data in the final solution
 * Feel free to edit these tables as necessary
 
-Table Name: 
+Table Name: Person 
 
-|            |            |            |            |            |            |            |            |            |
+| Person Id           |   Person Name         |  City Dweller          |   Fenced   Yard         |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|   1        |   Jane         |   Yes         |      No      |            |            |   2         |   Bob         |  No          | No
+|    3        |    Sam        |  No          |     Yes       |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 
-Table Name:
+Table Name: Pet
 
-|            |            |            |            |            |            |            |            |            |
+|   Pet Id         |     Pet Name       |   Pet Type          |            |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|   1         |   Ellie         |  Dog          |            |            |            |        2 |     Joe       |      Horse      |
+|     3       |     Ginger       |  Dog          |            |            |            |      4     |   Tiger        |     Cat       |
+|      5      |     MissKitty       |Cat          |            |            |            |      6       |  Toby          |   Turtle         |
+|       7     |     Bubble       |     Fish       |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 
-Table Name:
+Table Name: Person and Pet
 
-|            |            |            |            |            |            |            |            |            |
+|Pet Id            |    Person Id        |            |            |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|    1        |            |            |            |            |            |          2 |            |            |
+|      3      |            |            |            |            |            |          4  |            |            |
+|      5      |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
