@@ -37,6 +37,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+SELECT	*
+FROM	customers
+WHERE	city='London'
 
 ```
 
@@ -48,7 +51,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
-
+SELECT	*
+FROM	customers
+WHERE	postal_code = '1010'
 ```
 
 * [ ] ***find the phone number for the supplier with the id 11. Should be (010) 9984510***
@@ -59,7 +64,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
-
+SELECT	phone
+FROM	suppliers
+WHERE	supplier_id = '11'
 ```
 
 * [ ] ***list orders descending by the order date. The order with date 1998-05-06 should be at the top***
@@ -70,7 +77,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
-
+SELECT	*
+FROM	orders
+ORDER BY order_date DESC
 ```
 
 * [ ] ***find all suppliers who have names longer than 20 characters. Returns 11 records***
@@ -82,7 +91,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
-
+SELECT	*
+FROM	suppliers
+WHERE	length(company_name) > 20
 ```
 
 * [ ] ***find all customers that include the word 'MARKET' in the contact title. Should return 19 records***
@@ -95,7 +106,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
-
+SELECT	*
+FROM	customers
+WHERE	upper(contact_title) LIKE '%MARKET%'
 ```
 
 * [ ] ***add a customer record for***
@@ -112,7 +125,10 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
-
+INSERT INTO customers(customer_id, company_name, contact_name,
+					 address, city, postal_code, country)
+VALUES('SHIRE', 'The Shire', 'Bilbo Baggins', '1 Hobbit-Hole',
+	  'Bag End', '111', 'Middle Earth')
 ```
 
 * [ ] ***update _Bilbo Baggins_ record so that the postal code changes to _"11122"_***
@@ -123,6 +139,8 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+UPDATE	customers SET postal_code = '11122'
+WHERE	contact_name = 'Bilbo Baggins'
 
 ```
 
@@ -135,6 +153,12 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+SELECT	customers.company_name, count(orders.order_id) as Orders
+FROM	orders 
+JOIN	customers
+ON		orders.customer_id = customers.customer_id
+GROUP BY customers.company_name, customers.customer_id
+Order BY count(orders.order_id) DESC
 
 ```
 
@@ -146,7 +170,12 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
-
+SELECT	customers.contact_name, count(orders.order_id) as Orders
+FROM	orders 
+JOIN	customers
+ON		orders.customer_id = customers.customer_id
+GROUP BY customers.contact_name, customers.customer_id
+Order BY count(orders.order_id) DESC
 ```
 
 * [ ] ***list orders grouped by customer's city showing the number of orders per city. Returns 69 Records with _Aachen_ showing 6 orders and _Albuquerque_ showing 18 orders***
@@ -157,6 +186,12 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+SELECT	customers.city, count(orders.order_id) as Orders
+FROM	orders 
+JOIN	customers
+ON		orders.customer_id = customers.customer_id
+GROUP BY customers.city
+ORDER BY customers.city ASC
 
 ```
 
@@ -177,37 +212,37 @@ Below are some empty tables to be used to normalize the database
 * Not all of the cells will contain data in the final solution
 * Feel free to edit these tables as necessary
 
-Table Name:
+Table Name: Person 
 
-|            |            |            |            |            |            |            |            |            |
+| Person Id           |   Person Name         |  City Dweller          |   Fenced   Yard         |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|   1        |   Jane         |   Yes         |      No      |            |            |   2         |   Bob         |  No          | No
+|    3        |    Sam        |  No          |     Yes       |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 
-Table Name:
+Table Name: Pet
 
-|            |            |            |            |            |            |            |            |            |
+|   Pet Id         |     Pet Name       |   Pet Type          |            |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|   1         |   Ellie         |  Dog          |            |            |            |        2 |     Joe       |      Horse      |
+|     3       |     Ginger       |  Dog          |            |            |            |      4     |   Tiger        |     Cat       |
+|      5      |     MissKitty       |Cat          |            |            |            |      6       |  Toby          |   Turtle         |
+|       7     |     Bubble       |     Fish       |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 
-Table Name:
+Table Name: Person and Pet
 
-|            |            |            |            |            |            |            |            |            |
+|Pet Id            |    Person Id        |            |            |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|    1        |            |            |            |            |            |          2 |            |            |
+|      3      |            |            |            |            |            |          4  |            |            |
+|      5      |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
